@@ -1,11 +1,17 @@
 const Koa = require('koa');
-
-
+const logger = require('koa-logger')
+const config = require('./config/config')
+require('module-alias/register')
 const app = new Koa();
+const router = require('@api/demo')
+const catchError = require("@middlewares/exception")
 
-app.use(ctx => {
-    ctx.body = 'Hello Koa321321';
-});
+// 中间件
+app.use(catchError)
+app.use(router.routes())
 
-app.listen(3000);
-console.log('http://localhost:3000')
+
+
+
+app.listen(config.port);
+console.log(`Koa is listening in http://localhost:${ config.port }`)
