@@ -29,6 +29,5 @@ PoetryAll.init({
     tableName: 'gxm_poetry_all',
     // tableName: 'demo'
 })
-console.log(sequelize.models)
 
 module.exports = PoetryAll
