@@ -1,2 +1,7 @@
 .DS_Store
 node_modules/
+
+
+
+# 数据库账号密码配置
+/config/dataBase.js
