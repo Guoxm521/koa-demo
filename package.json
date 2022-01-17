@@ -9,7 +9,9 @@
   },
   "_moduleAliases": {
     "@root": ".",
+    "@app": "app",
     "@api": "app/api",
+    "@dao": "app/dao",
     "@core": "core",
     "@models": "models",
     "@middlewares": "middlewares"

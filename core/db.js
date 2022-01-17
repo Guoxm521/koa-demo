@@ -16,15 +16,15 @@ const sequelize = new Sequelize(dbName, user, password, {
     define: {
         timestamps: false
     },
-    // logging: false
+    logging: false
 })
 
 
-// sequelize.authenticate().then(res => {
-//     console.log('Connection has been established successfully.');
-// }).catch(err => {
-//     console.error('Unable to connect to the database:', err);
-// })
+sequelize.authenticate().then(res => {
+    console.log('Connection has been established successfully.');
+}).catch(err => {
+    console.error('Unable to connect to the database:', err);
+})
 
 
 module.exports = {

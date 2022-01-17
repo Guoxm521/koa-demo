@@ -27,6 +27,7 @@ PoetryAll.init({
     timestamps: false,
     modelName: 'PoetryAll',
     tableName: 'gxm_poetry_all',
+
     // tableName: 'demo'
 })
 
