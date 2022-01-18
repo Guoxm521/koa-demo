@@ -14,12 +14,12 @@ class PoetryAllDao {
         if (dynasty_id) { filter.dynasty_id = dynasty_id }
         if (title) {
             filter.title = {
-                [Op.like]: `%${title}%`
+                [Op.like]: `%${ title }%`
             };
         }
         if (content) {
             filter.content = {
-                [Op.like]: `%${content}%`
+                [Op.like]: `%${ content }%`
             };
         }
         try {
@@ -40,9 +40,6 @@ class PoetryAllDao {
         }
     }
 
-    static async level() {
-        const list = await PoetryCategory.findAll({ raw: true })
-    }
 }
 
 module.exports = {

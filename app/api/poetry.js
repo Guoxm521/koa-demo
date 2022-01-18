@@ -9,6 +9,7 @@ const router = new Router({
     prefix: '/api/poetry'
 })
 
+// 全部
 router.get('/', async (ctx) => {
     let [err, data] = await PoetryAllDao.list(ctx.query)
     if (!err) {
@@ -19,6 +20,7 @@ router.get('/', async (ctx) => {
 
 })
 
+// 分类
 router.get('/category', async (ctx) => {
     let [err, data] = await PoetryCategoryDao.list()
     if (!err) {
@@ -27,6 +29,28 @@ router.get('/category', async (ctx) => {
         ctx.body = resolve.json(err, 'error', 400686)
     }
 
+})
+
+router.get('/categoryCount', async (ctx) => {
+    let [err, data] = await PoetryCategoryDao.listCount(ctx.query)
+    if (!err) {
+        ctx.body = resolve.json(data)
+    } else {
+        ctx.body = resolve.json(err, 'error', 400686)
+    }
+
+})
+
+
+
+//分类top
+router.get('/dynastyTop', async (ctx) => {
+    let [err, data] = await PoetryCategoryDao.dynastyTop(ctx.query)
+    if (!err) {
+        ctx.body = resolve.json(data)
+    } else {
+        ctx.body = resolve.json(err, 'error', 400686)
+    }
 })
 
 module.exports = router

@@ -1,7 +1,6 @@
-const { Op } = require('sequelize')
+const Sequelize = require('sequelize')
 const PoetryCategory = require('@models/PoetryCategory')
-
-
+const PoetryAll = require('@models/PoetryAll')
 
 // 分类接口
 class PoetryCategoryDao {
@@ -13,6 +12,71 @@ class PoetryCategoryDao {
         if (dynasty_id) { filter.dynasty_id = dynasty_id }
         try {
             const list = await PoetryCategory.findAll({ raw: true })
+            let data = {
+                list: list
+            }
+            return [null, data]
+        } catch (error) {
+            return [error.message, null]
+        }
+    }
+
+    // 朝代统计
+    static async listCount(params = {}) {
+        let { order } = params
+        let order_method = null
+        if (order == 1) {
+            order_method = Sequelize.literal('count ASC')
+        } else if (order == 2) {
+            order_method = Sequelize.literal('count DESC')
+        } else {
+            order_method = ''
+        }
+        try {
+            const list = await PoetryAll.findAll({
+                attributes: [
+                    'dynasty_id',
+                    'dynasty',
+                    [Sequelize.fn('COUNT', Sequelize.col('author')), 'count'],
+                ],
+                group: ['dynasty', 'dynasty_id'],
+                order: order_method ? [order_method] : []
+            })
+            let data = {
+                list: list
+            }
+            return [null, data]
+        } catch (error) {
+            return [error.message, null]
+        }
+    }
+
+    // 各朝诗歌top
+    static async dynastyTop(params = {}) {
+        try {
+            let { level } = params
+            if (!level) {
+                level = 2
+            }
+            const authorList = await PoetryAll.findAll({
+                attributes: [
+                    'author',
+                    'dynasty_id',
+                    [Sequelize.fn('COUNT', Sequelize.col('author')), 'count'],
+                ],
+                group: ['author', 'dynasty_id'],
+                order: ['dynasty_id', Sequelize.literal('count DESC')]
+            })
+            const list = await PoetryCategory.findAll({ raw: true })
+            const authorCategoryList = {}
+            authorList.map(item => {
+                authorCategoryList[item.dynasty_id] = authorCategoryList[item.dynasty_id] || [];
+                authorCategoryList[item.dynasty_id].push(item);
+            })
+            list.map(e => {
+                e.top_list = authorCategoryList[e.dynasty_id].slice(0, level)
+            })
+
             let data = {
                 list: list
             }
