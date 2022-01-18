@@ -1,23 +1,25 @@
 const { Op } = require('sequelize')
 const PoetryAll = require('@models/PoetryAll')
 const Resolve = require('@app/lib/helper')
-let resolve = new Resolve()
 
 
 class PoetryAllDao {
+    // 列表
     static async list(params = {}) {
-        const { id, title, author, dynasty, content, page_size = 10, status, page = 1 } = params;
+        const { id, dynasty_id, title, author, dynasty, content, page_size = 10, page = 1 } = params;
         let filter = {}
         if (id) { filter.id = id }
         if (dynasty) { filter.id = dynasty }
+        if (author) { filter.author = author }
+        if (dynasty_id) { filter.dynasty_id = dynasty_id }
         if (title) {
             filter.title = {
-                [Op.like]: `%${ title }%`
+                [Op.like]: `%${title}%`
             };
         }
         if (content) {
             filter.content = {
-                [Op.like]: `%${ content }%`
+                [Op.like]: `%${content}%`
             };
         }
         try {
@@ -34,8 +36,12 @@ class PoetryAllDao {
             }
             return [null, data]
         } catch (error) {
-            return [error, null]
+            return [error.message, null]
         }
+    }
+
+    static async level() {
+        const list = await PoetryCategory.findAll({ raw: true })
     }
 }
 
