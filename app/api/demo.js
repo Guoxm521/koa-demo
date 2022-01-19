@@ -2,20 +2,20 @@ const Router = require('koa-router')
 const PoetryAll = require("@models/PoetryAll")
 const Sequelize = require('sequelize')
 const { sequelize } = require("@core/db.js")
-const router = new Router({
-    prefix: '/api/demo'
-})
 
-router.get('/', async (ctx) => {
+
+const router = new Router()
+
+router.post('/', async (ctx, next) => {
     const project = await PoetryAll.findAll({
         attributes: ['dynasty', [Sequelize.fn('COUNT', Sequelize.col('dynasty')), 'n_hats'],],
         group: 'dynasty',
         // raw: true
     });
-    ctx.body = 123
+    ctx.body = 123  
 })
 
-router.get('/12', async (ctx) => {
+router.post('/12', async (ctx) => {
     ctx.body = 'demo/12'
 })
 
