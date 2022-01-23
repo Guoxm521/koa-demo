@@ -2,6 +2,7 @@ const Router = require('koa-router')
 const PoetryAll = require("@models/PoetryAll")
 const Sequelize = require('sequelize')
 const { sequelize } = require("@core/db.js")
+const BlogAdmin = require('@models/BlogAdmin')
 
 
 const router = new Router()
@@ -12,7 +13,7 @@ router.post('/', async (ctx, next) => {
         group: 'dynasty',
         // raw: true
     });
-    ctx.body = 123  
+    ctx.body = 123
 })
 
 router.post('/12', async (ctx) => {
