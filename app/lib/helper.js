@@ -6,6 +6,13 @@ class Resolve {
             data
         }
     }
+    fail(data = {}, message = 'fail', code = 10001) {
+        return {
+            code,
+            message,
+            data
+        }
+    }
 }
 
 module.exports = Resolve

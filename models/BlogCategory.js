@@ -1,5 +1,6 @@
 const { sequelize } = require('@core/db')
 const { Model, DataTypes } = require('sequelize')
+const moment = require('moment');
 
 class BlogCategory extends Model {
 
@@ -39,13 +40,14 @@ BlogCategory.init({
         type: DataTypes.STRING(13),
         allowNull: true,
         defaultValue: 0,
-        comment: '创建时间戳'
+        comment: '创建时间戳',
+
     },
     u_time: {
         type: DataTypes.STRING(13),
         allowNull: true,
         defaultValue: 0,
-        comment: '更新时间戳'
+        comment: '更新时间戳',
     },
 }, {
     sequelize,
