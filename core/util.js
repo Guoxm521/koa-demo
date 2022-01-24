@@ -35,7 +35,19 @@ const findMembers = function (instance, {
     return _find(instance)
 }
 
+const createValidate = function (parmas, list) {
+    if (parmas && parmas instanceof Array) {
+        parmas.map(e => {
+            this[e] = list[e]
+        })
+    } else {
+        for (const item in list) {
+            this[item] = list[item]
+        }
+    }
+}
 
 module.exports = {
-    findMembers
+    findMembers,
+    createValidate
 }

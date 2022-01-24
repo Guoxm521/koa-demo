@@ -2,6 +2,7 @@ const {
     Rule,
     LinValidator
 } = require('@core/validate.js')
+const { createValidate } = require('@core/util.js')
 
 
 class BaseRules {
@@ -14,15 +15,7 @@ class TempValidator extends LinValidator {
     constructor() {
         super()
         let list = new BaseRules()
-        if (parmas && parmas instanceof Array) {
-            parmas.map(e => {
-                this[e] = list[e]
-            })
-        } else {
-            for (const item in list) {
-                this[item] = list[item]
-            }
-        }
+        createValidate.call(this, parmas, list)
     }
 }
 
