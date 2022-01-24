@@ -10,10 +10,10 @@ function joinPath(...parmas) {
 let pathList = ['app/api', 'app/dao', 'app/validators', 'models']
 
 // 判断文件在不在
-async function exists(name) {
-    let promise_list = pathList.map(e => {
+async function exists(low_str, up_str) {
+    let promise_list = pathList.map((e, index) => {
         return new Promise((resolve) => {
-            fs.access(joinPath(e, 'BlobAdmin'), (err) => {
+            fs.access(joinPath(e, index == 3 ? up_str : low_str), (err) => {
                 if (err) {
                     resolve({
                         item: e,
@@ -35,42 +35,39 @@ async function exists(name) {
         }
     })
     if (list && list.length > 0) {
-        throw new Error(`${list.length}个文件夹已存在文件`)
+        throw new Error(`${ list.length }个文件夹已存在文件`)
     }
 
 }
 
 // 读取文件
-async function readFile(name) {
-    let file_list = ['apiTemp.js', 'daoTemp.js', 'modelTemp.js', 'validateTemp.js']
+async function readFile(up_str) {
+    let file_list = ['apiTemp', 'daoTemp', 'validateTemp', 'modelTemp']
     let promise_list = file_list.map((e, index) => {
         return new Promise((resolve) => {
-            let text = fs.readFileSync(e).toString()
+            let text = fs.readFileSync(`${ e }.js`).toString()
             if (index !== 0) {
-                text = text.replace(/Temp/g, name)
+                text = text.replace(/Temp/g, up_str)
             }
             resolve(text);
         })
     })
+
+    return Promise.all(promise_list)
 }
 
 // 写入文件
-async function writeFile() {
-    
+async function writeFile(res, low_str, up_str) {
+    res.map((e, index) => {
+        try {
+            fs.writeFileSync(joinPath(pathList[index], index == 3 ? up_str : low_str), e, 'utf8');
+        } catch (err) {
+            throw err;
+        }
+    })
 }
 
-async function main() {
-    try {
-        await readFile('Ceshi')
-        // await exists()
 
-    } catch (error) {
-        console.log(error)
-    }
-
-}
-main()
-return
 const questions = [
     {
         type: 'input',
@@ -89,17 +86,18 @@ const questions = [
 ];
 
 
-inquirer.prompt(questions).then((answers) => {
-    console.log(path)
+inquirer.prompt(questions).then(async (answers) => {
     let low_str = answers.name // 小驼峰
     let up_str = replaceStr(answers.name) //大驼峰
-    // 文件名
-    let files_name = {
-        api_name: low_str,
-        dao_name: low_str,
-        validate_name: low_str,
-        modle_name: up_str
+    try {
+        await exists(low_str, up_str)
+        let list = await readFile(up_str)
+        await writeFile(list, low_str, up_str)
+        console.log('文件生成完成')
+    } catch (error) {
+        console.log(error)
     }
+
 }).catch(error => {
     console.log(error)
 })
