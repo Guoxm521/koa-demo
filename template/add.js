@@ -7,30 +7,69 @@ let basePath = path.resolve('../')
 function joinPath(...parmas) {
     return path.join(basePath, ...parmas) + '.js'
 }
-console.log(joinPath('models', 'name'))
+let pathList = ['app/api', 'app/dao', 'app/validators', 'models']
 
 // 判断文件在不在
-function exists(name) {
-    let pathList = ['app/api', 'app/dao', 'app/validators', 'models']
+async function exists(name) {
     let promise_list = pathList.map(e => {
-        return new Promise((resolve, reject) => {
-            fs.access(joinPath(e, 'BlogAdmin'), (err) => {
+        return new Promise((resolve) => {
+            fs.access(joinPath(e, 'BlobAdmin'), (err) => {
                 if (err) {
-                    resolve(false)
+                    resolve({
+                        item: e,
+                        flag: false
+                    })
                 } else {
-                    resolve(true)
+                    resolve({
+                        item: e,
+                        flag: true
+                    })
                 }
             })
         })
     })
-    return Promise.all(promise_list)
+    let res = await Promise.all(promise_list)
+    let list = res.filter(e => {
+        if (e.flag) {
+            return e
+        }
+    })
+    if (list && list.length > 0) {
+        throw new Error(`${list.length}个文件夹已存在文件`)
+    }
+
 }
 
-async function main1() {
-    let res = await exists()
-    console.log(res)
+// 读取文件
+async function readFile(name) {
+    let file_list = ['apiTemp.js', 'daoTemp.js', 'modelTemp.js', 'validateTemp.js']
+    let promise_list = file_list.map((e, index) => {
+        return new Promise((resolve) => {
+            let text = fs.readFileSync(e).toString()
+            if (index !== 0) {
+                text = text.replace(/Temp/g, name)
+            }
+            resolve(text);
+        })
+    })
 }
-main1()
+
+// 写入文件
+async function writeFile() {
+    
+}
+
+async function main() {
+    try {
+        await readFile('Ceshi')
+        // await exists()
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+main()
 return
 const questions = [
     {
