@@ -22,7 +22,12 @@ BlogAdmin.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        comment: '登录密码'
+        comment: '登录密码',
+        set(val) {
+            const salt = bcryptjs.genSaltSync(10);
+            const psw = bcryptjs.hashSync(val, salt);
+            this.setDataValue("password", psw);
+        },
     },
     nickname: {
         type: DataTypes.STRING(50),

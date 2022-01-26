@@ -12,6 +12,7 @@ const catchError = require("@middlewares/exception")
 const Router = require('koa-router')
 const httpException = require("@core/httpException")
 global.errs = httpException
+global.config = config
 
 // 中间件
 app.use(cors())

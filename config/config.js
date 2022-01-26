@@ -9,4 +9,9 @@ module.exports = {
         user: database.user,
         password: database.password
     },
+    security: {
+        secretKey: "guoXiaoMing",
+        // 过期时间 1小时
+        expiresIn: 60 * 60
+    }
 }
