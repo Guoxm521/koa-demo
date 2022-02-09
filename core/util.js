@@ -49,15 +49,11 @@ const createValidate = function (parmas, list) {
 }
 
 // 生成令牌
-const generateToken = function () {
-    console.log(2131312312312)
+const generateToken = function (uid) {
     let secretKey = global.config.security.secretKey
     let expiresIn = global.config.security.expiresIn
-    let token = jwt.sign({ foo: 'bar' }, secretKey, { expiresIn: '120' });
-
-    console.log(token)
-    var decoded = jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJpYXQiOjE2NDMyMDYzOTMsImV4cCI6MTY0MzIwNjM5M30.iXcADWTwq7kGw73giemLY-dn8xVJ-mvKX7GgWVP354Q', secretKey);
-    console.log(decoded.foo) // bar
+    let token = jwt.sign({ uid }, secretKey, { expiresIn: expiresIn });
+    return token
 }
 
 module.exports = {

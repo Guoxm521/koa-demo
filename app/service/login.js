@@ -3,11 +3,14 @@ const { generateToken } = require('@core/util')
 class LoginManager {
     static async adminLogin(params) {
         const { email, password } = params
-        // 验证账号密码是否正确
         const [err, admin] = await BlogAdminDao.verify({ email, password });
-        generateToken()
         if (!err) {
-            return [null, admin]
+            let token = generateToken(admin.id)
+            return [null, {
+                token,
+                email: admin.email,
+                nickname: admin.nickname,
+            }]
         } else {
             return [err, null]
         }
