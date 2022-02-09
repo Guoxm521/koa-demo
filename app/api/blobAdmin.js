@@ -4,6 +4,7 @@ const { AdminValidator } = require('@validators/blobAdmin');
 const { BlogAdminDao } = require("@dao/blobAdmin")
 const { LoginManager } = require('@app/service/login')
 const Resolve = require('@app/lib/helper')
+const { Auth } = require("@middlewares/auth")
 let resolve = new Resolve()
 
 // 注册
@@ -33,14 +34,13 @@ router.post("/login", async (ctx) => {
     if (!err) {
         ctx.response.status = 200;
         ctx.body = resolve.json(data);
-
     } else {
         ctx.body = err;
     }
 })
 
 // 获取信息
-router.get("/auth", async (ctx) => {
+router.get("/auth", new Auth().m, async (ctx) => {
     ctx.response.body = '信息'
 })
 

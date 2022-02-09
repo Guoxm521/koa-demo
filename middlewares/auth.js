@@ -1,9 +1,6 @@
-
-
 class Auth {
     get m() {
         return async (ctx, next) => {
-            // throw new HttpException('heheheheheeh')
             console.log("中间件")
             await next()
         }
