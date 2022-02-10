@@ -3,8 +3,8 @@ const { BlogCategoryDao } = require('@dao/blobCategory')
 const Resolve = require('@app/lib/helper')
 let resolve = new Resolve()
 const { CategoryValidator, PostCategoryValidator, DelCategoryValidator } = require('@validators/blobCategory');
-
 const router = new Router()
+const { Auth } = require("@middlewares/auth")
 // 新增
 router.post('/add', async (ctx, next) => {
     const v = await new CategoryValidator().validate(ctx);

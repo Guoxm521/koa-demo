@@ -40,7 +40,7 @@ router.post("/login", async (ctx) => {
 })
 
 // 获取信息
-router.get("/auth", new Auth().m, async (ctx) => {
+router.get("/auth", async (ctx) => {
     ctx.response.body = '信息'
 })
 
