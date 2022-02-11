@@ -16,6 +16,9 @@ const sequelize = new Sequelize(dbName, user, password, {
     define: {
         timestamps: false
     },
+    query: {
+        raw: true
+    }
     // logging: false
 })
 

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const BlogCategory = require('@models/BlogCategory')
-
+const { handleTree } = require("@app/lib/utils")
 
 
 class BlogCategoryDao {
@@ -11,6 +11,14 @@ class BlogCategoryDao {
             sort_order = 1,
             parent_id = 0,
         } = params
+        if (parent_id) {
+            const hasParent = await BlogCategory.findOne({
+                where: { id: parent_id }
+            });
+            if (!hasParent) {
+                throw new global.errs.Existing('父级分类不存在');
+            }
+        }
         const hasCategory = await BlogCategory.findOne({
             where: { name }
         });
@@ -92,30 +100,27 @@ class BlogCategoryDao {
 
     // 获取列表
     static async list(query = {}) {
-        const { id, name, status, parent_id, page_size = 10, page = 1 } = query;
+        const { id, name, status, parent_id } = query;
         let params = {}
         if (status) params.status = status
         if (id) params.id = id
         if (parent_id) params.parent_id = parent_id
         if (name) {
             params.name = {
-                [Op.like]: `%${ name }%`
+                [Op.like]: `%${name}%`
             };
         }
         try {
             const { count, rows } = await BlogCategory.findAndCountAll({
                 where: params,
-                limit: +page_size,
-                offset: (page - 1) * page_size,
                 order: [
-                    ['c_time', 'DESC']
+                    ['c_time', 'ASC']
                 ]
             });
+            let arr = handleTree(rows)
             let data = {
                 count,
-                list: rows,
-                page,
-                page_size
+                list: arr
             }
             return [null, data]
         } catch (error) {
