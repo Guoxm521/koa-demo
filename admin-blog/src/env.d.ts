@@ -6,3 +6,6 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare  module 'unplugin-auto-import'
+declare  module 'unplugin-vue-components'
