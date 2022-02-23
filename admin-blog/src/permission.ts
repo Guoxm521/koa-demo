@@ -7,7 +7,13 @@ router.beforeEach((to, from, next) => {
     // @ts-ignore
     document.title = to.meta?.title ? to.meta.title : '胡萝卜菜'
     if (getCookie()) {
-        next()
+        if (to.path === '/login') {
+            let path = to.path
+            next(`/?from=${path}`)
+        } else {
+            next()
+        }
+
     } else {
         if (to.path !== '/login') {
             let path = to.path
