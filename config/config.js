@@ -13,5 +13,6 @@ module.exports = {
         secretKey: "guoXiaoMing",
         // 过期时间 7天
         expiresIn: 60 * 60 * 24 * 7
+        // expiresIn: 30
     }
 }

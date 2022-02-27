@@ -10,6 +10,7 @@ class LoginManager {
                 token,
                 email: admin.email,
                 nickname: admin.nickname,
+                expired: global.config.security.expiresIn
             }]
         } else {
             return [err, null]

@@ -5,12 +5,10 @@ const { PoetryCategoryDao } = require('@dao/poetryCategory')
 const Resolve = require('@app/lib/helper')
 let resolve = new Resolve()
 
-const router = new Router({
-    prefix: '/api/poetry'
-})
+const router = new Router()
 
 // 全部
-router.get('/', async (ctx) => {
+router.get('/list', async (ctx) => {
     let [err, data] = await PoetryAllDao.list(ctx.query)
     if (!err) {
         ctx.body = resolve.json(data)

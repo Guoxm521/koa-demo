@@ -22,7 +22,7 @@ class Auth {
                 let errMsg = "无效的token";
                 if (!authToken) {
                     errMsg = "需要携带token值";
-                    throw new global.errs.Forbidden(errMsg);
+                    throw new global.errs.Forbidden(errMsg, 4001);
                 }
                 try {
                     var decode = jwt.verify(authToken, global.config.security.secretKey)
@@ -30,7 +30,7 @@ class Auth {
                     if (error.name === 'TokenExpiredError') {
                         errMsg = "token已过期"
                     }
-                    throw new global.errs.Forbidden(errMsg);
+                    throw new global.errs.Forbidden(errMsg, 4002);
                 }
                 ctx.auth = {
                     uid: decode.uid
