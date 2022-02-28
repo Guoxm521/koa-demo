@@ -5,33 +5,33 @@ import {
   computed,
   Transition,
   defineComponent,
-  getCurrentInstance
-} from "vue";
-import backTop from "/@/assets/svg/back_top.svg?component";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
+  getCurrentInstance,
+} from "vue"
+import backTop from "/@/assets/svg/back_top.svg?component"
+import { usePermissionStoreHook } from "/@/store/modules/permission"
 
 const props = defineProps({
-  fixedHeader: Boolean
-});
+  fixedHeader: Boolean,
+})
 const keepAlive: Boolean = ref(
   getCurrentInstance().appContext.config.globalProperties.$config?.KeepAlive
-);
+)
 const instance =
-  getCurrentInstance().appContext.app.config.globalProperties.$storage;
+  getCurrentInstance().appContext.app.config.globalProperties.$storage
 
 const transitions = computed(() => {
   return route => {
-    return route.meta.transition;
-  };
-});
+    return route.meta.transition
+  }
+})
 
 const hideTabs = computed(() => {
-  return instance?.configure.hideTabs;
-});
+  return instance?.configure.hideTabs
+})
 
 const layout = computed(() => {
-  return instance?.layout.layout === "vertical";
-});
+  return instance?.layout.layout === "vertical"
+})
 
 const getSectionStyle = computed(() => {
   return [
@@ -39,9 +39,9 @@ const getSectionStyle = computed(() => {
     !hideTabs.value && layout ? "padding-top: 85px;" : "",
     hideTabs.value && !layout.value ? "padding-top: 48px" : "",
     !hideTabs.value && !layout.value ? "padding-top: 85px;" : "",
-    props.fixedHeader ? "" : "padding-top: 0;"
-  ];
-});
+    props.fixedHeader ? "" : "padding-top: 0;",
+  ]
+})
 
 const transitionMain = defineComponent({
   render() {
@@ -62,20 +62,20 @@ const transitionMain = defineComponent({
           transitions.value(this.route) &&
           `animate__animated ${this.route.meta.transition.leaveTransition}`,
         mode: "out-in",
-        appear: true
+        appear: true,
       },
       {
-        default: () => [this.$slots.default()]
+        default: () => [this.$slots.default()],
       }
-    );
+    )
   },
   props: {
     route: {
       type: undefined,
-      required: true
-    }
-  }
-});
+      required: true,
+    },
+  },
+})
 </script>
 
 <template>
@@ -148,6 +148,10 @@ const transitionMain = defineComponent({
 }
 
 .main-content {
-  margin: 24px;
+  margin: 12px;
+  padding: 12px;
+  min-height: calc(100vh - 110px);
+  background: #fff;
+  border-radius: 6px;
 }
 </style>
