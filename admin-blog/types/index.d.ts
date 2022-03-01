@@ -31,3 +31,5 @@ declare type ForDataType<T> = {
 };
 
 declare type AnyFunction<T> = (...args: any[]) => T;
+
+declare let ElMessage: any;

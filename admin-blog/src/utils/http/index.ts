@@ -49,6 +49,7 @@ class PureHttp {
     PureHttp.axiosInstance.interceptors.request.use(
       (config: PureHttpRequestConfig) => {
         const $config = config
+        $config.params = $config.data
         // 开启进度条动画
         NProgress.start()
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
@@ -128,7 +129,7 @@ class PureHttp {
       ...param,
       ...axiosConfig,
     } as PureHttpRequestConfig
-
+    console.log(config)
     // 单独处理自定义请求/响应回掉
     return new Promise((resolve, reject) => {
       PureHttp.axiosInstance

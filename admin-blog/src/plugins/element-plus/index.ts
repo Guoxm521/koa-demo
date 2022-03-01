@@ -39,6 +39,7 @@ import {
   ElSelect,
   ElOption,
   ElPagination,
+  ElMessage,
   // 指令
   ElLoading,
   ElInfiniteScroll,
@@ -87,6 +88,7 @@ const components = [
   ElSelect,
   ElOption,
   ElPagination,
+  ElMessage
 ]
 
 export function useElementPlus(app: App) {
