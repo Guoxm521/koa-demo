@@ -88,7 +88,7 @@ const components = [
   ElSelect,
   ElOption,
   ElPagination,
-  ElMessage
+  ElMessage,
 ]
 
 export function useElementPlus(app: App) {

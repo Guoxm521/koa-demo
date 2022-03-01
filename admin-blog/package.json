@@ -29,6 +29,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@antv/g2plot": "^2.4.8",
     "@ctrl/tinycolor": "^3.4.0",
     "@vueuse/core": "^7.6.2",
     "@vueuse/motion": "^2.0.0-beta.9",

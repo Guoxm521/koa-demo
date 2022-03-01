@@ -100,14 +100,16 @@ const pageForm = reactive({
 })
 
 const handleSizeChange = (val: number) => {
+  pageForm.page_size = val
   getList()
 }
 const handleCurrentChange = (val: number) => {
+  pageForm.page = val
   getList()
 }
 
 const dynastyList = ref([])
-getPoetryCategory({}).then(res => {
+getPoetryCategory({}).then((res: any) => {
   if (res.code === 200) {
     dynastyList.value = res.data.list
   }
