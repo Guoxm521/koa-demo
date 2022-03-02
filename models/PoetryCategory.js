@@ -10,11 +10,14 @@ PoetryCategory.init({
         type: DataTypes.INTEGER(11),
         primaryKey: true
     },
-    dynastry: {
+    dynasty: {
         type: DataTypes.STRING(255),
     },
-    dynastry_id: {
+    dynasty_id: {
         type: DataTypes.STRING(25),
+    },
+    time:{
+        type:DataTypes.CHAR(32)
     }
 }, {
     sequelize,

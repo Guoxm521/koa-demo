@@ -23,9 +23,9 @@
             >
               <el-option
                 v-for="item in dynastyList"
-                :key="item.dynastry_id"
-                :label="item.dynastry"
-                :value="item.dynastry_id"
+                :key="item.dynasty_id"
+                :label="item.dynasty"
+                :value="item.dynasty_id"
               ></el-option>
             </el-select>
           </el-form-item>

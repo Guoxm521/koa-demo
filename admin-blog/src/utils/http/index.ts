@@ -129,7 +129,6 @@ class PureHttp {
       ...param,
       ...axiosConfig,
     } as PureHttpRequestConfig
-    console.log(config)
     // 单独处理自定义请求/响应回掉
     return new Promise((resolve, reject) => {
       PureHttp.axiosInstance
