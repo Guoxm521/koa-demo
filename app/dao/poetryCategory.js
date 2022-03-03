@@ -54,10 +54,9 @@ class PoetryCategoryDao {
     // 各朝诗歌top
     static async dynastyTop(params = {}) {
         try {
-            let { level } = params
-            if (!level) {
-                level = 2
-            }
+            let { level, type } = params
+            if (!level) level = 2
+            if (!type) type = 1
             const authorList = await PoetryAll.findAll({
                 attributes: [
                     'author',
@@ -67,23 +66,33 @@ class PoetryCategoryDao {
                 group: ['author', 'dynasty_id'],
                 order: ['dynasty_id', Sequelize.literal('count DESC')]
             })
-            const list = await PoetryCategory.findAll({ raw: true })
-            const authorCategoryList = {}
-            authorList.map(item => {
-                authorCategoryList[item.dynasty_id] = authorCategoryList[item.dynasty_id] || [];
-                authorCategoryList[item.dynasty_id].push(item);
-            })
-            list.map(e => {
-                e.top_list = authorCategoryList[e.dynasty_id].slice(0, level)
-            })
+            let list = []
+            let allAuthorList = []
+            if (type === 1) {
+                list = await PoetryCategory.findAll({ raw: true })
+                const authorCategoryList = {}
+                authorList.map(item => {
+                    authorCategoryList[item.dynasty_id] = authorCategoryList[item.dynasty_id] || [];
+                    authorCategoryList[item.dynasty_id].push(item);
+                })
+                list.map(e => {
+                    e.top_list = authorCategoryList[e.dynasty_id].slice(0, level)
+                })
+            } else {
+                allAuthorList = authorList.slice(0, level)
+            }
 
             let data = {
-                list: list
+                list: type === 1 ? list : allAuthorList
             }
             return [null, data]
         } catch (error) {
             return [error.message, null]
         }
+    }
+
+    static async handleDynastyTop() {
+
     }
 }
 

@@ -11,7 +11,7 @@ export const getPoetryCategory = (data: object) => {
 }
 
 /* 各朝诗人top */
-/* level */
+/* level 个数   type  1  各朝分类  2  全部排行*/
 export const getDynastyTop = (data: object) => {
   return http.request("get", "/poetry/dynastyTop", { data })
 }
