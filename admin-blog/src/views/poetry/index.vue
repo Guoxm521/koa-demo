@@ -72,6 +72,7 @@ import { reactive, toRefs, ref } from "vue"
 import { any, object } from "vue-types"
 import { getPoetryList, getPoetryCategory } from "/@/api/poetry"
 import pageMain from "/@/components/pageMain/index.vue"
+import { ElMessage } from "element-plus"
 
 const loading = ref(false)
 const searchForm = reactive({

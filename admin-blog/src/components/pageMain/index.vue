@@ -2,6 +2,7 @@
   <div class="page_mian_header"><slot name="header"></slot></div>
   <div class="page_mian_table"><slot name="main"></slot></div>
   <div class="page_mian_pagenation"><slot name="page"></slot></div>
+  <div><slot></slot></div>
 </template>
 
 <script lang="ts" setup>

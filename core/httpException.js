@@ -10,7 +10,7 @@ class HttpException extends Error {
   class ParameterException extends HttpException {
     constructor(msg, errorCode) {
       super()
-      this.code = 400
+      this.code = 200
       this.msg = msg || '参数错误'
       this.errorCode = errorCode || 10000
     }
@@ -28,7 +28,7 @@ class HttpException extends Error {
   class NotFound extends HttpException {
     constructor(msg, errorCode) {
       super()
-      this.code = 404
+      this.code = 200
       this.msg = msg || '404找不到'
       this.errorCode = errorCode || 10005
     }
@@ -46,7 +46,7 @@ class HttpException extends Error {
   class Existing extends HttpException {
     constructor(msg, errorCode) {
       super()
-      this.code = 412
+      this.code = 200
       this.msg = msg || '已存在'
       this.errorCode = errorCode || 10006
     }

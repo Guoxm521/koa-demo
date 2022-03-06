@@ -55,9 +55,20 @@ class BlogCategoryDao {
                 id
             }
         });
+        if (category.status === 1) {
+            throw new global.errs.Existing('该分类已启用，无法删除');
+        }
         if (!category) {
             throw new global.errs.NotFound('没有找到相关分类');
         }
+
+        const hasChild = await BlogCategory.findOne({
+            where: { parent_id: id }
+        });
+        if (!hasChild) {
+            throw new global.errs.Existing('该分类下存在子分类');
+        }
+
         try {
             const res = await BlogCategory.destroy({
                 where: {
@@ -107,14 +118,15 @@ class BlogCategoryDao {
         if (parent_id) params.parent_id = parent_id
         if (name) {
             params.name = {
-                [Op.like]: `%${name}%`
+                [Op.like]: `%${ name }%`
             };
         }
         try {
             const { count, rows } = await BlogCategory.findAndCountAll({
                 where: params,
                 order: [
-                    ['c_time', 'ASC']
+                    ['sort_order', 'ASC',],
+                    ['c_time', 'ASC',]
                 ]
             });
             let arr = handleTree(rows)

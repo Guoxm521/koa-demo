@@ -93,8 +93,8 @@ class PureHttp {
           PureHttp.initConfig.beforeResponseCallback(response)
           return response.data
         }
-        if (!response.data.code && response.data.error_code) {
-          switch (response.data.error_code) {
+        if (response.data.code !== 200) {
+          switch (response.data.code) {
             case 4002:
               useUserStoreHook().logOut()
               break

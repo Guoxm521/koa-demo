@@ -11,7 +11,7 @@ const catchError = async (ctx, next) => {
         if (isHttpException) {
             ctx.body = {
                 msg: error.msg,
-                error_code: error.errorCode,
+                code: error.errorCode,
                 request: `${ ctx.method } ${ ctx.path }`
             }
             ctx.response.status = error.code
@@ -20,7 +20,7 @@ const catchError = async (ctx, next) => {
             console.log(error)
             ctx.body = {
                 msg: "未知错误！",
-                error_code: 9999,
+                code: 9999,
                 request: `${ ctx.method } ${ ctx.path }`
             }
             ctx.response.status = 500
