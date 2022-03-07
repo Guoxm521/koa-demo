@@ -3,6 +3,7 @@ import { warpperEnv, regExps } from "./build";
 import { getPluginsList } from "./build/plugins";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
 
+
 // 当前执行node命令时文件夹的地址（工作目录）
 const root: string = process.cwd();
 

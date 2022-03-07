@@ -9,6 +9,7 @@ import ElementPlus from "unplugin-element-plus/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
 import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor";
+import compressPlugin from "vite-plugin-compression";
 
 export function getPluginsList(command, VITE_LEGACY) {
   const prodMock = true;
@@ -18,6 +19,14 @@ export function getPluginsList(command, VITE_LEGACY) {
     // jsx、tsx语法支持
     vueJsx(),
     WindiCSS(),
+    compressPlugin({ //gzip静态资源压缩
+      verbose: true,    // 默认即可
+      disable: false,  //开启压缩(不禁用)，默认即可
+      deleteOriginFile: false, //删除源文件
+      threshold: 10240, //压缩前最小文件大小
+      algorithm: 'gzip',  //压缩算法
+      ext: '.gz', //文件类型
+    }),
     // 线上环境删除console
     removeConsole(),
     // 修改layout文件夹下的文件时自动重载浏览器 解决 https://github.com/xiaoxian521/vue-pure-admin/issues/170
