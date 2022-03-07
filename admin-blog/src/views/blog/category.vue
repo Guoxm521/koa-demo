@@ -17,7 +17,7 @@
               <el-tag class="ml-2" v-if="scope.row.status === 1" type="success">
                 启用</el-tag
               >
-              <el-tag class="ml-2" v-if="scope.row.status === 2" type="success">
+              <el-tag class="ml-2" v-if="scope.row.status === 2" type="danger">
                 关闭</el-tag
               >
             </template>
@@ -37,7 +37,7 @@
               <el-button type="text" @click="handleAddBlogCategory(scope.row)"
                 >新增</el-button
               >
-              <el-button type="text" @click="handleEditBlogCategory"
+              <el-button type="text" @click="handleEditBlogCategory(scope.row)"
                 >编辑</el-button
               >
               <el-button type="text" @click="handleDelBlogCategory(scope.row)"
@@ -52,6 +52,8 @@
         v-model:ceshi="ceshi"
         :title="dialogTitle"
         :categoryInfo="categoryInfo"
+        :type="handleType"
+        @refresh="handleGetBlogList"
       ></categoryAddDialog>
     </pageMain>
   </div>
@@ -108,6 +110,7 @@ const handleDelBlogCategory = (item: any) => {
 const openDialog = ref(false)
 const dialogTitle = ref("新增分类")
 const ceshi = ref("你好")
+const handleType = ref("add")
 
 const categoryInfo = reactive({
   id: null,
@@ -119,6 +122,17 @@ const categoryInfo = reactive({
 })
 
 const handleAddBlogCategory = (row: row) => {
+  handleType.value = "add"
+  dialogTitle.value = "新增分类"
+  handleRow(row)
+}
+const handleEditBlogCategory = (row: row) => {
+  handleType.value = "edit"
+  dialogTitle.value = "编辑分类"
+  handleRow(row)
+}
+
+const handleRow = (row: row) => {
   categoryInfo.id = row.id
   categoryInfo.parent_id = row.parent_id
   categoryInfo.parent_name = getFatherName(row.parent_id)
@@ -126,9 +140,6 @@ const handleAddBlogCategory = (row: row) => {
   categoryInfo.sort_order = row.sort_order
   categoryInfo.status = row.status
   openDialog.value = true
-}
-const handleEditBlogCategory = () => {
-  console.log(ceshi.value)
 }
 
 // 获取父级分类的名称

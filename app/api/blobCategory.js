@@ -49,6 +49,7 @@ router.post('/update', async (ctx) => {
         parent_id: v.get('body.parent_id'),
     }
     const [err, data] = await BlogCategoryDao.update(form);
+    console.log(err)
     if (!err) {
         ctx.response.status = 200;
         ctx.body = resolve.json('更新分类成功');

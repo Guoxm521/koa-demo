@@ -10,6 +10,7 @@ class BlogCategoryDao {
             name,
             sort_order = 1,
             parent_id = 0,
+            status = 1
         } = params
         if (parent_id) {
             const hasParent = await BlogCategory.findOne({
@@ -31,6 +32,7 @@ class BlogCategoryDao {
         category.name = name
         category.sort_order = sort_order
         category.parent_id = parent_id
+        category.status = status
         category.c_time = category.u_time = new Date().getTime()
 
         try {
@@ -65,7 +67,7 @@ class BlogCategoryDao {
         const hasChild = await BlogCategory.findOne({
             where: { parent_id: id }
         });
-        if (!hasChild) {
+        if (hasChild) {
             throw new global.errs.Existing('该分类下存在子分类');
         }
 
@@ -92,6 +94,7 @@ class BlogCategoryDao {
             parent_id
         } = params
         const category = await BlogCategory.findByPk(id);
+
         if (!category) {
             throw new global.errs.NotFound('没有找到相关分类');
         }
@@ -102,7 +105,11 @@ class BlogCategoryDao {
         category.u_time = new Date().getTime()
 
         try {
-            const res = await category.save();
+            const res = await BlogCategory.update(category, {
+                where: {
+                    id: id
+                }
+            });
             return [null, res]
         } catch (err) {
             return [err, null]

@@ -17,10 +17,12 @@ import { reactive, toRefs, ref, onBeforeMount, onMounted } from "vue"
 .page_mian_table {
   margin-bottom: 10px;
 }
-/deep/ .el-pagination {
+
+:deep(.el-pagination) {
   justify-content: flex-end;
 }
-/deep/ .el-table__empty-block {
+
+:deep(.el-table__empty-block) {
   min-height: 200px;
 }
 </style>

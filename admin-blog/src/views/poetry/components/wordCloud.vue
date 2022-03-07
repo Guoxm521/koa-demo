@@ -8,7 +8,6 @@
 <script lang="ts" setup>
 import { nextTick, watch, ref, onBeforeMount, onMounted } from "vue"
 import { WordCloud } from "@antv/g2plot"
-import data from "./data.json"
 
 const porps = defineProps({
   authorTop: Array,

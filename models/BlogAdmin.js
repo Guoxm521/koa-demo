@@ -19,6 +19,12 @@ BlogAdmin.init({
         allowNull: false,
         comment: '登录邮箱'
     },
+    status: {
+        type: DataTypes.INET(2),
+        allowNull: false,
+        defaultValue: 1,
+        comment: "类别状态,0-隐藏,1-正常",
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
