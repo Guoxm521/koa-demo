@@ -3,8 +3,8 @@ const PoetryAll = require("@models/PoetryAll")
 const Sequelize = require('sequelize')
 const { sequelize } = require("@core/db.js")
 const BlogAdmin = require('@models/BlogAdmin')
-
-
+const redis = require("@core/redis.js")
+const { setValue, getValue } = require('@app/lib/redisUtils.js')
 const router = new Router()
 
 router.post('/', async (ctx, next) => {
@@ -17,7 +17,16 @@ router.post('/', async (ctx, next) => {
 })
 
 router.post('/12', async (ctx) => {
-    ctx.body = 'demo/12'
+    // // let result = await redis.set('arrList', '我是测测试的redis值')
+    // let result = await redis.get('arrList')
+    // // await redis.expire('arrList',5)
+    // console.log('result', result)
+
+    // let res = await setValue('arrList', '测试数据')
+    // let c = await redis.expireat('arrList', 3213)
+    let res = await getValue('arrList')
+    console.log(res)
+    ctx.body = res
 })
 
 router.get('/haha', async (ctx) => {

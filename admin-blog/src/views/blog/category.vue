@@ -1,7 +1,11 @@
 <template>
   <div>
     <pageMain>
-      <!-- <template v-slot:header> 头部</template> -->
+      <template v-slot:header-right>
+        <el-button type="primary" @click="openDialog = true"
+          >新增分类</el-button
+        >
+      </template>
       <template v-slot:main>
         <el-table
           :data="tableData"
@@ -61,7 +65,7 @@
 
 <script lang="ts" setup>
 import { reactive, toRefs, ref, onBeforeMount, onMounted } from "vue"
-import { getBlogList, delBlogCategory } from "/@/api/blog"
+import { getBlogCaegoryList, delBlogCategory } from "/@/api/blog"
 import { parseTime } from "/@/utils/filter"
 import { ElMessage, ElMessageBox } from "element-plus"
 import categoryAddDialog from "./components/categoryAddDialog.vue"
@@ -75,7 +79,7 @@ interface row {
 
 const tableData = ref([])
 const handleGetBlogList = () => {
-  getBlogList({}).then((res: any) => {
+  getBlogCaegoryList({}).then((res: any) => {
     if (res.code === 200) {
       tableData.value = res.data.list
     }

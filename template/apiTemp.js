@@ -1,5 +1,8 @@
 const Router = require('koa-router')
+const { TempDao } = require('@dao/Temp')
 const router = new Router()
+const Resolve = require('@app/lib/helper')
+let resolve = new Resolve()
 
 // 新增
 router.get("/add", async (ctx) => {

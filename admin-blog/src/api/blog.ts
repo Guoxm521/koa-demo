@@ -1,7 +1,7 @@
 import { http } from "../utils/http"
 
 /* 分类---列表 */
-export const getBlogList = (data: object) => {
+export const getBlogCaegoryList = (data: object) => {
   return http.request("get", "/blob/category/list", { data })
 }
 
@@ -18,4 +18,34 @@ export const addBlogCategory = (data: object) => {
 /* 分类---更新 */
 export const updateBlogCategory = (data: object) => {
   return http.request("post", "/blob/category/update", { data })
+}
+
+
+
+/* 标签---新增 */
+export const addBlogTag = (data: object) => {
+  return http.request("post", "/blob/tags/add", { data })
+}
+/* 标签---更新 */
+export const updateBlogTag = (data: object) => {
+  return http.request("post", "/blob/tags/update", { data })
+}
+/* 标签---删除 */
+export const deleteBlogTag = (data: object) => {
+  return http.request("get", "/blob/tags/delete", { data })
+}
+/* 标签---列表 */
+export const getBlogTagList = (data: object) => {
+  return http.request("get", "/blob/tags/list", { data })
+}
+
+
+
+/* 博客---新增 */
+export const addBlog = (data: object) => {
+  return http.request("post", "/blog/main/add", { data })
+}
+/* 博客---更新 */
+export const updateBlog = (data: object) => {
+  return http.request("post", "/blog/main/update", { data })
 }

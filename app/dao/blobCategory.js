@@ -118,7 +118,7 @@ class BlogCategoryDao {
 
     // 获取列表
     static async list(query = {}) {
-        const { id, name, status, parent_id } = query;
+        const { id, name, status, parent_id, type } = query;
         let params = {}
         if (status) params.status = status
         if (id) params.id = id
@@ -136,7 +136,7 @@ class BlogCategoryDao {
                     ['c_time', 'ASC',]
                 ]
             });
-            let arr = handleTree(rows)
+            let arr = type == 1 ? rows : handleTree(rows)
             let data = {
                 count,
                 list: arr

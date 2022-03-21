@@ -2,9 +2,11 @@ const Router = require('koa-router')
 const { Auth } = require("@middlewares/auth")
 const demo = require('./demo')
 const blobCategory = require('./blobCategory')
+const blogTag = require('./blogTag')
 const blobAdmin = require('./blobAdmin')
-const ceShi = require("./ceShi")
+const blog = require('./blog')
 const poetry = require('./poetry')
+const upload = require('./common/upload')
 let router = new Router()
 
 
@@ -16,6 +18,13 @@ const categoryAuthMiddle = {
     prefix: '/blob/category'
 }
 router.use(categoryAuthMiddle.prefix, new Auth(categoryAuthMiddle).m, blobCategory.routes())
+
+// 标签
+const blogTagAuthMiddle = {
+    whiteList: ['/list'],
+    prefix: '/blob/tags'
+}
+router.use(blogTagAuthMiddle.prefix, new Auth(blogTagAuthMiddle).m, blogTag.routes())
 
 // 管理员
 const adminAuthMiddle = {
@@ -32,8 +41,15 @@ const poetryAuthMiddle = {
 }
 router.use(poetryAuthMiddle.prefix, new Auth(poetryAuthMiddle).m, poetry.routes())
 
+// 博客内容
+const blogMiddle = {
+    whiteList: [],
+    prefix: '/blog/main'
+}
+router.use(blogMiddle.prefix, new Auth(blogMiddle).m, blog.routes())
 
-router.use('/blob/ceshi', c1, ceShi.routes())
+// 图片上传
+router.use('/common/upload', c1, upload.routes())
 
 async function c1(ctx, next) {
     console.log(ctx.url)

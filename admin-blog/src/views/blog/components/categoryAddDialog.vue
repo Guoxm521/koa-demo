@@ -7,7 +7,7 @@
     <div>
       <el-form :model="categoryInfo" label-width="100px">
         <el-form-item label="所属分类">
-          <span>{{ parent_name }}</span>
+          <span>{{ parent_name || "一级分类" }}</span>
         </el-form-item>
         <el-form-item label="分类名称">
           <el-input v-model="form.name" placeholder="清输入分类名称"></el-input>

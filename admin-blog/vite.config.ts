@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { warpperEnv, regExps } from "./build";
+import { warpperEnv, regExps, PROJECT_BUILD_TIME} from "./build";
 import { getPluginsList } from "./build/plugins";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
 
@@ -16,6 +16,7 @@ const pathResolve = (dir: string): string => {
 const alias: Record<string, string> = {
   "/@": pathResolve("src"),
   "@build": pathResolve("build"),
+  "@packagejson": pathResolve("package.json"),
   //解决开发环境下的警告
   "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js"
 };
@@ -91,7 +92,8 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       chunkSizeWarningLimit: 2000
     },
     define: {
-      __INTLIFY_PROD_DEVTOOLS__: false
+      __INTLIFY_PROD_DEVTOOLS__: false,
+      PROJECT_BUILD_TIME
     }
   };
 };
