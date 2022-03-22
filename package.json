@@ -14,6 +14,7 @@
     "@dao": "app/dao",
     "@validators": "app/validators",
     "@core": "core",
+    "@config": "config",
     "@models": "models",
     "@middlewares": "middlewares"
   },
@@ -21,9 +22,11 @@
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^3.1.0",
+    "ali-oss": "^6.17.1",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "inquirer": "^8.2.0",
+    "ioredis": "^4.28.5",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",

@@ -1,3 +1,4 @@
+import moment from 'moment'
 // 处理环境变量
 const warpperEnv = (envConf: Recordable): ViteEnv => {
   // 此处为默认值，无需修改
@@ -38,4 +39,10 @@ const loadEnv = (): ViteEnv => {
   return import.meta.env;
 };
 
-export { warpperEnv, regExps, loadEnv };
+// 编译时间
+
+/** 项目构建时间 */
+const PROJECT_BUILD_TIME = JSON.stringify(moment().format('YYYY-MM-DD HH:mm:ss'));
+
+
+export { warpperEnv, regExps, loadEnv, PROJECT_BUILD_TIME};

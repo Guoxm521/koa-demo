@@ -41,13 +41,18 @@ import {
   ElPagination,
   ElMessage,
   ElDialog,
+  ElUpload,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElImage,
   // 指令
   ElLoading,
   ElInfiniteScroll,
+
 } from "element-plus"
 
 // Directives
-const plugins = [ElLoading, ElInfiniteScroll]
+const plugins = [ElLoading, ElInfiniteScroll ]
 
 const components = [
   ElTag,
@@ -91,12 +96,23 @@ const components = [
   ElPagination,
   ElMessage,
   ElDialog,
+  ElUpload,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElImage
 ]
+
+
+import { Plus, Delete} from "@element-plus/icons-vue"
+const icons = [Plus, Delete]
 
 export function useElementPlus(app: App) {
   // 注册组件
   components.forEach((component: Component) => {
     app.component(component.name, component)
+  })
+  icons.forEach((icon: Component) => {
+    app.component(icon.name,icon)
   })
   // 注册指令
   plugins.forEach(plugin => {

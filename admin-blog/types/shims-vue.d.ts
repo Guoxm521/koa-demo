@@ -10,3 +10,4 @@ declare module "*.scss" {
 }
 
 declare module "vuedraggable/src/vuedraggable";
+declare module "@packagejson"

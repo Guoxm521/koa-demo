@@ -12,7 +12,7 @@ class BaseRules {
 }
 
 class TempValidator extends LinValidator {
-    constructor() {
+    constructor(parmas) {
         super()
         let list = new BaseRules()
         createValidate.call(this, parmas, list)

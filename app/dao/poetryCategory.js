@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const PoetryCategory = require('@models/PoetryCategory')
 const PoetryAll = require('@models/PoetryAll')
+const { setValue, getValue } = require('@app/lib/redisUtils.js')
 
 // 分类接口
 class PoetryCategoryDao {
@@ -33,6 +34,13 @@ class PoetryCategoryDao {
             order_method = ''
         }
         try {
+            let redisRes = await getValue('listCount')
+            let data = {}
+            if (redisRes) {
+                let newList = JSON.parse(redisRes)
+                data.list = newList
+                return [null, data]
+            }
             const list = await PoetryAll.findAll({
                 attributes: [
                     'dynasty_id',
@@ -42,9 +50,8 @@ class PoetryCategoryDao {
                 group: ['dynasty', 'dynasty_id'],
                 order: order_method ? [order_method] : []
             })
-            let data = {
-                list: list
-            }
+            await setValue('listCount', JSON.stringify(list))
+            data.list = list
             return [null, data]
         } catch (error) {
             return [error.message, null]
@@ -56,7 +63,28 @@ class PoetryCategoryDao {
         try {
             let { level, type } = params
             if (!level) level = 2
-            if (!type) type = 1
+            if (!type) type = 1  //1  按朝代统计  2  总数前10
+            let data = {}
+            // 各朝前5
+            if (type === 1) {
+                let redisRes = await getValue('dynastyTop1')
+                if (redisRes) {
+                    let newList = JSON.parse(redisRes)
+                    data.list = newList
+                    return [null, data]
+                }
+            }
+            // 前100
+            if (type == 2) {
+                let redisRes = await getValue('dynastyTop2')
+                if (redisRes) {
+                    let newList = JSON.parse(redisRes)
+                    data.list = newList
+                    return [null, data]
+                }
+            }
+
+
             const authorList = await PoetryAll.findAll({
                 attributes: [
                     'author',
@@ -81,10 +109,12 @@ class PoetryCategoryDao {
             } else {
                 allAuthorList = authorList.slice(0, level)
             }
-
-            let data = {
-                list: type === 1 ? list : allAuthorList
+            if (type == 1) {
+                await setValue('dynastyTop1', JSON.stringify(list))
+            } else if (type == 2) {
+                await setValue('dynastyTop2', JSON.stringify(allAuthorList))
             }
+            data.list = type === 1 ? list : allAuthorList
             return [null, data]
         } catch (error) {
             return [error.message, null]

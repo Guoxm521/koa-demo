@@ -9,6 +9,7 @@
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
   </el-upload>
+  <div @click="handleAdd">你好</div>
 </template>
 
 <script lang="ts" setup>
@@ -25,7 +26,6 @@ const handleAvatarSuccess = (res, file) => {
   imageUrl.value = URL.createObjectURL(file.raw!)
 }
 const beforeAvatarUpload = file => {
-  console.log(file)
   const isJPG = file.type === "image/jpeg"
   const isLt2M = file.size / 1024 / 1024 < 2
 
@@ -45,7 +45,6 @@ const handleGetUploadParams = () => {
   })
 }
 const handleUpload = op => {
-  console.log(op)
   let obj = ossParams.value
   let config: any = {}
   config.host = obj["host"]
@@ -92,12 +91,7 @@ const handleUpload = op => {
 }
 handleGetUploadParams()
 const handleAdd = () => {
-  let href = route.resolve({
-    path: "/blog/add",
-    query: {
-      id: 123213213,
-    },
-  })
+  let href = route.resolve("/blog/add")
   console.log(href)
 }
 </script>
