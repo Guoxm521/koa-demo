@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const Sequelize = require('sequelize')
 const { sequelize } = require("@core/db.js")
-const database = require("@config/database.js")
+const database = require("@config/dataBase.js")
 const { Buffer } = require("buffer");
 const OSS = require("ali-oss");
 const moment = require("moment");

@@ -1,5 +1,5 @@
 const redis = require("@core/redis.js")
-const database = require('@config/database.js')
+const database = require('@config/dataBase.js')
 const expire = database.redis.expire
 
 async function setValue(key, value) {
