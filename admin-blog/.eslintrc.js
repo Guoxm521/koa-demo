@@ -88,6 +88,9 @@ module.exports = {
   env: {
     node: true
   },
+  globals: {
+    PROJECT_BUILD_TIME: 'readonly',
+  },
   extends: [
     'eslint:recommended',
     'plugin:vue/recommended',

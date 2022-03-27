@@ -1,4 +1,5 @@
 import moment from 'moment'
+import {define} from './define'
 // 处理环境变量
 const warpperEnv = (envConf: Recordable): ViteEnv => {
   // 此处为默认值，无需修改
@@ -28,21 +29,16 @@ const warpperEnv = (envConf: Recordable): ViteEnv => {
   }
   return ret;
 };
-
 // 跨域代理重写
 const regExps = (value: string, reg: string): string => {
   return value.replace(new RegExp(reg, "g"), "");
 };
-
 // 环境变量
 const loadEnv = (): ViteEnv => {
   return import.meta.env;
 };
-
 // 编译时间
-
-/** 项目构建时间 */
-const PROJECT_BUILD_TIME = JSON.stringify(moment().format('YYYY-MM-DD HH:mm:ss'));
-
-
-export { warpperEnv, regExps, loadEnv, PROJECT_BUILD_TIME};
+const PROJECT_BUILD_TIME = () => {
+  return JSON.stringify(moment().format('YYYY-MM-DD HH:mm:ss'));
+}
+export { warpperEnv, regExps, loadEnv,define};

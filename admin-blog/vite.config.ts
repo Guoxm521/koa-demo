@@ -1,9 +1,8 @@
 import { resolve } from "path";
-import { warpperEnv, regExps, PROJECT_BUILD_TIME} from "./build";
+import { warpperEnv, regExps } from "./build";
 import { getPluginsList } from "./build/plugins";
 import { UserConfigExport, ConfigEnv, loadEnv } from "vite";
-
-
+import moment from 'moment'
 // 当前执行node命令时文件夹的地址（工作目录）
 const root: string = process.cwd();
 
@@ -93,7 +92,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     },
     define: {
       __INTLIFY_PROD_DEVTOOLS__: false,
-      PROJECT_BUILD_TIME
     }
   };
 };

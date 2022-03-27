@@ -1,6 +1,8 @@
 <template>
   <Card>
-    <template #header> <div class="title">项目信息</div> </template>
+    <template #header>
+      <div class="title">项目信息</div>
+    </template>
     <template #main>
       <el-descriptions class="margin-top" :column="2" border>
         <el-descriptions-item label="版本">
@@ -9,15 +11,9 @@
         <el-descriptions-item label="	最后编译时间">
           <el-tag>{{ lastestBuildTime }}</el-tag>
         </el-descriptions-item>
-        <el-descriptions-item label="	Github地址">
-          https://github.com/Guoxm521
-        </el-descriptions-item>
-        <el-descriptions-item label="	项目地址">
-          demo.gxming.top
-        </el-descriptions-item>
-        <el-descriptions-item label="	后端技术栈">
-          koa + sequelize + redis + docker
-        </el-descriptions-item>
+        <el-descriptions-item label="	Github地址">https://github.com/Guoxm521</el-descriptions-item>
+        <el-descriptions-item label="	项目地址">demo.gxming.top</el-descriptions-item>
+        <el-descriptions-item label="	后端技术栈">koa + sequelize + redis + docker</el-descriptions-item>
       </el-descriptions>
     </template>
   </Card>
@@ -27,8 +23,10 @@
 import { reactive, toRefs, ref, onBeforeMount, onMounted } from "vue"
 import Card from "./Card.vue"
 import pkgJson from "./../model"
+import moment from 'moment'
 const { version } = pkgJson
-const lastestBuildTime = PROJECT_BUILD_TIME
+// const lastestBuildTime = PROJECT_BUILD_TIME
+const lastestBuildTime = JSON.stringify(moment().format('YYYY-MM-DD HH:mm:ss'))
 </script>
 <style scoped>
 .content {
