@@ -2,9 +2,7 @@
   <div>
     <pageMain>
       <template v-slot:header-right>
-        <el-button type="primary" @click="openDialog = true"
-          >新增分类</el-button
-        >
+        <el-button type="primary" @click="openDialog = true">新增分类</el-button>
       </template>
       <template v-slot:main>
         <el-table
@@ -18,35 +16,21 @@
           <el-table-column prop="sort_order" label="序号" />
           <el-table-column prop="sort_order" width="100" label="状态">
             <template #default="scope">
-              <el-tag class="ml-2" v-if="scope.row.status === 1" type="success">
-                启用</el-tag
-              >
-              <el-tag class="ml-2" v-if="scope.row.status === 2" type="danger">
-                关闭</el-tag
-              >
+              <el-tag class="ml-2" v-if="scope.row.status === 1" type="success">启用</el-tag>
+              <el-tag class="ml-2" v-if="scope.row.status === 2" type="danger">关闭</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="c_time" label="创建时间">
-            <template #default="scope">
-              {{ parseTime(scope.row.c_time) }}
-            </template>
+            <template #default="scope">{{ parseTime(scope.row.c_time) }}</template>
           </el-table-column>
           <el-table-column prop="u_time" label="更新时间">
-            <template #default="scope">
-              {{ parseTime(scope.row.u_time) }}
-            </template>
+            <template #default="scope">{{ parseTime(scope.row.u_time) }}</template>
           </el-table-column>
           <el-table-column width="200" align="center" prop="操作" label="操作">
             <template #default="scope">
-              <el-button type="text" @click="handleAddBlogCategory(scope.row)"
-                >新增</el-button
-              >
-              <el-button type="text" @click="handleEditBlogCategory(scope.row)"
-                >编辑</el-button
-              >
-              <el-button type="text" @click="handleDelBlogCategory(scope.row)"
-                >删除</el-button
-              >
+              <el-button type="text" @click="handleAddBlogCategory(scope.row)">新增</el-button>
+              <el-button type="text" @click="handleEditBlogCategory(scope.row)">编辑</el-button>
+              <el-button type="text" @click="handleDelBlogCategory(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -107,7 +91,7 @@ const handleDelBlogCategory = (item: any) => {
         }
       })
     })
-    .catch(() => {})
+    .catch(() => { })
 }
 
 // 编辑 && 新增

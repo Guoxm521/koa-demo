@@ -14,23 +14,22 @@ BlogModel.init({
     },
     title: {
         type: DataTypes.STRING(80),
-        allowNull: false,
+        allowNull: true,
         comment: '标题'
     },
     des: {
         type: DataTypes.STRING(100),
-        allowNull: false,
+        allowNull: true,
         comment: '描述'
     },
     category: {
         type: DataTypes.INTEGER(10),
         allowNull: true,
-        defaultValue: "",
         comment: '分类'
     },
     cover: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
         comment: '封面'
     },
     tag: {

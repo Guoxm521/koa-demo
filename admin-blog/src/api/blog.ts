@@ -49,3 +49,17 @@ export const addBlog = (data: object) => {
 export const updateBlog = (data: object) => {
   return http.request("post", "/blog/main/update", { data })
 }
+/* 博客---列表 */
+export const getBlogList = (data: object) => {
+  return http.request("get", "/blog/main/list", { data })
+}
+
+/* 博客---删除 */
+export const deleteBlog = (data: object) => {
+  return http.request("post", "/blog/main/delete", { data })
+}
+/* 博客---详情 */
+export const getBlogDetail = (data: object) => {
+  return http.request("get", "/blog/main/detai", { data })
+}
+

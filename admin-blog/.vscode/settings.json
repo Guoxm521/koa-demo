@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "[vue]": {
-    "editor.defaultFormatter": "octref.vetur"
+    "editor.defaultFormatter": "johnsoncodehk.volar"
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"

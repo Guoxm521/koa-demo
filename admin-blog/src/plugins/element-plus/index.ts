@@ -103,8 +103,8 @@ const components = [
 ]
 
 
-import { Plus, Delete} from "@element-plus/icons-vue"
-const icons = [Plus, Delete]
+import { Plus, Delete, MoreFilled, QuestionFilled} from "@element-plus/icons-vue"
+const icons = [Plus, Delete,MoreFilled,QuestionFilled]
 
 export function useElementPlus(app: App) {
   // 注册组件

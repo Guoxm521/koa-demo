@@ -1,129 +1,64 @@
 <template>
-  <el-upload
-    class="avatar-uploader"
-    action=""
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :http-request="handleUpload"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-    <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-  </el-upload>
+  <div>
+    <pageMain>
+      <template v-slot:main>
+        <div style="position:relative">
+          <div class="buttons">
+            <el-button type="primary" @click="createArticle">文章发布</el-button>
+          </div>
+          <el-row>
+            <el-col :span="2">
+              <el-tabs
+                v-model="activeName"
+                tab-position="left"
+                class="demo-tabs"
+                @tab-click="handleClick"
+              >
+                <el-tab-pane label="文章" name="1"></el-tab-pane>
+                <el-tab-pane :label="draftTitle" name="2"></el-tab-pane>
+              </el-tabs>
+            </el-col>
+            <el-col :span="22">
+              <blogArticle v-show="activeName === '1'"></blogArticle>
+              <blogDrafts @setDraftsNum="getDraftsNum" v-show="activeName === '2'"></blogDrafts>
+            </el-col>
+          </el-row>
+        </div>
+      </template>
+    </pageMain>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { reactive, ref } from "vue"
+<script lang='ts' setup>
+import { reactive, toRefs, ref, onBeforeMount, onMounted } from 'vue'
 import { useRouter } from "vue-router"
-import { ElMessage } from "element-plus"
-import { Plus } from "@element-plus/icons-vue"
-import { getUploadParams } from "/@/api/common"
-import OSS from "ali-oss"
-import axios from "axios"
+import type { TabsPaneContext } from 'element-plus'
+import blogArticle from './components/blogArticle.vue'
+import blogDrafts from './components/blogDrafts.vue'
+const activeName = ref('1')
 const route = useRouter()
-const imageUrl = ref("")
-const handleAvatarSuccess = (res, file) => {
-  imageUrl.value = URL.createObjectURL(file.raw!)
-}
-const beforeAvatarUpload = file => {
-  console.log(file)
-  const isJPG = file.type === "image/jpeg"
-  const isLt2M = file.size / 1024 / 1024 < 2
-
-  if (!isJPG) {
-    ElMessage.error("Avatar picture must be JPG format!")
-  }
-  if (!isLt2M) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!")
-  }
-  return isJPG && isLt2M
+const handleClick = (tab: TabsPaneContext, event: Event) => {
+  console.log(tab, event)
 }
 
-const ossParams: any = ref({})
-const handleGetUploadParams = () => {
-  getUploadParams({}).then((res: any) => {
-    ossParams.value = res.data
-  })
+const createArticle = () => {
+  let routeData = route.resolve("/blog/add")
+  window.open(routeData.href, '_blank');
 }
-const handleUpload = op => {
-  console.log(op)
-  let obj = ossParams.value
-  let config: any = {}
-  config.host = obj["host"]
-  config.policyBase64 = obj["policy"]
-  config.accessid = obj["accessid"]
-  config.signature = obj["signature"]
-  config.expire = parseInt(obj["expire"])
-  config.callbackbody = obj["callback"]
-  config.dir = obj["dir"]
-  let fd = new FormData(),
-    uuid = new Date().getTime(),
-    key = config.dir + uuid + op.file.name
-  fd.append("key", key)
-  // fd.append("success_action_status", "200")
-  fd.append("x-oss-object-acl", "public-read")
-  fd.append("x-oss-meta-fullname", op.file.name)
-  fd.append("OSSAccessKeyId", config.accessid)
-  fd.append("policy", config.policyBase64)
-  fd.append("signature", config.signature)
-  fd.append("callback", config.callbackbody)
-  // fd.append("success_action_status", "200")
-  fd.append("file", op.file)
-  if (config.host.indexOf("http:") > -1) {
-    var protocol = window.location.protocol || "http:"
-    var subUrl = config.host.substring(5, config.host.length)
-    config.host = protocol + subUrl
-  }
-  // 数据组装完成后，发送上传请求到阿里云oss
-  axios({
-    url: config.host,
-    method: "POST",
-    headers: {
-      "x-oss-callback": config.callbackbody,
-    },
-    data: fd,
-  })
-    .then(res => {
-      console.log(res)
-      // 拿到结果后，做其他操作
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-handleGetUploadParams()
-const handleAdd = () => {
-  let href = route.resolve({
-    path: "/blog/add",
-    query: {
-      id: 123213213,
-    },
-  })
-  console.log(href)
+
+const draftTitle = ref("草稿箱")
+const getDraftsNum = (num) => {
+  draftTitle.value = `草稿箱（${num}）`
 }
 </script>
-
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
+<style scoped lang="scss">
+::v-deep(.el-tabs__nav-wrap .is-left) {
+  font-size: 16px;
 }
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
+.buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1000;
 }
 </style>

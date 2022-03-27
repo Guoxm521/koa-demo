@@ -33,6 +33,8 @@ const defaultConfig: AxiosRequestConfig = {
   paramsSerializer: params => qs.stringify(params, { indices: false }),
 }
 
+const nprogressList = ['/blog/main/add','/blog/main/update']
+
 class PureHttp {
   constructor() {
     this.httpInterceptorsRequest()
@@ -43,15 +45,19 @@ class PureHttp {
 
   // 保存当前Axios实例对象
   private static axiosInstance: AxiosInstance = Axios.create(defaultConfig)
-
+  
   // 请求拦截
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       (config: PureHttpRequestConfig) => {
         const $config = config
-        $config.params = $config.data
+        if ($config.method === 'get') {
+          $config.params = $config.data
+        }
         // 开启进度条动画
-        NProgress.start()
+        if (!nprogressList.find(e => e === $config.url)) {
+          NProgress.start()
+        }
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof config.beforeRequestCallback === "function") {
           config.beforeRequestCallback($config)
@@ -62,7 +68,6 @@ class PureHttp {
           return $config
         }
         const token = getToken()
-        // const token = ""
         if (token) {
           config.headers["Authorization"] = token
           return $config
@@ -83,7 +88,9 @@ class PureHttp {
       async (response: PureHttpResoponse) => {
         const $config = response.config
         // 关闭进度条动画
-        NProgress.done()
+        if (!nprogressList.find(e => e === $config.url)) {
+          NProgress.done()
+        }
         // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
         if (typeof $config.beforeResponseCallback === "function") {
           $config.beforeResponseCallback(response)

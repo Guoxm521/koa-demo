@@ -12,9 +12,11 @@
       </div>
       <div class="right_box">
         <div class="status_text">文章将自动保存至草稿</div>
-        <div><el-button>草稿箱</el-button></div>
         <div>
-          <publishButton :content="content" :title="title"></publishButton>
+          <el-button @click="jumpToDraft">草稿箱</el-button>
+        </div>
+        <div>
+          <publishButton :content="content" :title="title" @getcontent="getcontent"></publishButton>
         </div>
         <el-avatar :size="40" :src="avatars" class="avatar"></el-avatar>
       </div>
@@ -42,6 +44,8 @@ import "@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css"
 import Prism from "prismjs"
 import avatars from "/@/assets/avatars.jpg"
 import publishButton from "./components/publishButton.vue"
+import { useRoute, useRouter } from "vue-router"
+import { getBlogDetail } from "/@/api/blog"
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 })
@@ -54,6 +58,18 @@ const content = ref("")
 const title = ref("")
 const handleUploadImage = (event, insertImage, files) => {
   console.log(files)
+}
+const route = useRoute()
+const getcontent = (params) => {
+  content.value = params.content
+  title.value = params.title
+}
+const router = useRouter()
+const jumpToDraft = () => {
+  console.log(321312312)
+  router.push({
+    path: '/blog/index'
+  })
 }
 </script>
 <style scoped lang="scss">
