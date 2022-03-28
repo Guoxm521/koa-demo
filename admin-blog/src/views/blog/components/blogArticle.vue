@@ -173,9 +173,11 @@ const getData = async () => {
     total.value = res.data.count
     res.data.list.map(e => {
       e.tags_labels = []
-      e.tag.split(',').map(i => {
-        e.tags_labels.push(tagOptions.value[i])
-      })
+      if (e.tag) {
+        e.tag.split(',').map(i => {
+          e.tags_labels.push(tagOptions.value[i])
+        })
+      }
     })
     tableData.value = res.data.list
     loading.value = false

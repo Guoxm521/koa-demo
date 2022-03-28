@@ -44,6 +44,8 @@
     "element-plus": "^2.0.2",
     "element-resize-detector": "^1.2.3",
     "js-cookie": "^3.0.1",
+    "json-editor-vue3": "^1.0.5",
+    "jsoneditor": "^9.7.4",
     "lodash-es": "^4.17.21",
     "md-editor-v3": "^1.11.0",
     "mitt": "^3.0.0",

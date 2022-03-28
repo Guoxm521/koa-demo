@@ -10,6 +10,10 @@ import { injectResponsiveStorage } from "/@/utils/storage/responsive"
 import pageMain from "/@/components/pageMain/index.vue"
 import { ElMessage } from "element-plus"
 
+import JsonEditorVue from 'json-editor-vue3'
+
+
+
 import "animate.css"
 import "virtual:windi.css"
 // 导入公共样式
@@ -42,7 +46,7 @@ app.component("ElMessage", ElMessage)
 getServerConfig(app).then(async config => {
   injectResponsiveStorage(app, config)
   setupStore(app)
-  app.use(router).use(MotionPlugin).use(useElementPlus).use(usI18n)
+  app.use(router).use(MotionPlugin).use(useElementPlus).use(usI18n).use(JsonEditorVue)
   await router.isReady()
   app.mount("#app")
 })
