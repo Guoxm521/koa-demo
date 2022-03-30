@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "[vue]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    "editor.defaultFormatter": "johnsoncodehk.volar"
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
