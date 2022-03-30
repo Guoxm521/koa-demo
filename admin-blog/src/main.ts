@@ -10,7 +10,6 @@ import { injectResponsiveStorage } from "/@/utils/storage/responsive"
 import pageMain from "/@/components/pageMain/index.vue"
 import { ElMessage } from "element-plus"
 
-import JsonEditorVue from 'json-editor-vue3'
 
 
 
@@ -46,7 +45,7 @@ app.component("ElMessage", ElMessage)
 getServerConfig(app).then(async config => {
   injectResponsiveStorage(app, config)
   setupStore(app)
-  app.use(router).use(MotionPlugin).use(useElementPlus).use(usI18n).use(JsonEditorVue)
+  app.use(router).use(MotionPlugin).use(useElementPlus).use(usI18n)
   await router.isReady()
   app.mount("#app")
 })

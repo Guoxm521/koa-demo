@@ -21,6 +21,15 @@ const companyRouter = [
           title: "接口注册",
           i18n: false,
         },
+      },
+       {
+        path: "/company/demo",
+        name: "CompanyDemo",
+        component: () => import("/@/views/company/demo.vue"),
+        meta: {
+          title: "测试",
+          i18n: false,
+        },
       }
     ],
   },

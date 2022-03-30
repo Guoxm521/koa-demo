@@ -44,7 +44,6 @@
     "element-plus": "^2.0.2",
     "element-resize-detector": "^1.2.3",
     "js-cookie": "^3.0.1",
-    "json-editor-vue3": "^1.0.5",
     "jsoneditor": "^9.7.4",
     "lodash-es": "^4.17.21",
     "md-editor-v3": "^1.11.0",
@@ -63,7 +62,8 @@
     "vue": "^3.2.31",
     "vue-i18n": "^9.2.0-beta.30",
     "vue-router": "^4.0.12",
-    "vue-types": "^4.1.1"
+    "vue-types": "^4.1.1",
+    "vue3-json-editor": "^1.1.5"
   },
   "devDependencies": {
     "@commitlint/cli": "13.1.0",
