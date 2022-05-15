@@ -22,7 +22,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     logging: false
 })
 
-
+// sequelize.sync({ force: true })
 sequelize.authenticate().then(res => {
     console.log('Connection has been established successfully.');
 }).catch(err => {
